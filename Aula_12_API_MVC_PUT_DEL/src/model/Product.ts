@@ -1,17 +1,25 @@
-export class Product{
-    id:number;
+export class Modalidade{
+    id:any;
     name:string;
-    description:string;
-    price:number;
+    vegano:boolean;
 
-    constructor(name:string, description:string, price:number){
+    constructor(id: any, name:string, vegano:boolean){
+        this.id = id;
         this.name = name;
-        this.description = description;
-        this.price = price;
-        this.id = this.geraId();
+        this.vegano = vegano;
     }
+}
 
-    private geraId():number{
-        return Date.now();
+////////
+
+export class Estoque{
+    estoqueId:number;
+    quantidade:number;
+    precoVenda:number;
+
+    constructor(estoqueId: any, quatidade:number, precoVenda:number){
+        this.estoqueId = estoqueId;
+        this.quantidade = quatidade;
+        this.precoVenda = precoVenda;
     }
 }

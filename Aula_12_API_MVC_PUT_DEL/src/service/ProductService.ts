@@ -1,74 +1,131 @@
-import { Product } from "../model/Product";
-import { ProductRepository } from "../repository/ProductRepository";
-export class ProductService{
+import { Estoque, Modalidade } from "../model/Product";
+import { ModalidadeRepository, EstoqueRepository } from "../repository/ProductRepository";
 
-    productRepository: ProductRepository = new ProductRepository();
+export class ModalidadeService{
 
-    cadastrarProduto(produtoData: any): Product {
-        const { name, description, price } = produtoData;
-        if(!name || !description || !price ){
+    modalidadeRepository: ModalidadeRepository = new ModalidadeRepository();
+
+    cadastrarModalidade(modalidadeData: any): Modalidade {
+        const {id, name, vegano} = modalidadeData;
+        if(!id || !name || vegano == null){
             throw new Error("Informações incompletas");
         }
 
-        const produtoEncontrado = this.consultarProduto(undefined,name);
-        if(produtoEncontrado){
-            throw new Error("Produto já cadastrado!!!");
+        const modalidadeEncontrado = this.consultarModalidade(undefined,name);
+        if(modalidadeEncontrado){
+            throw new Error("Modalidade já cadastrada!!!");
         }
-        const novoProduto = new Product(name, description, price);
-        this.productRepository.insereProduto(novoProduto);
-        return novoProduto;
+        const novaModalidade = new Modalidade(id, name, vegano);
+        this.modalidadeRepository.insereModalidade(novaModalidade);
+        return novaModalidade;
     }
 
-    consultarProduto(id: any, name:any): Product|undefined{
-        if(id && name){
-            console.log("Com ID e Name");
-            const idNumber: number = parseInt(id, 10);
-            return this.productRepository.filtraProdutoPorNomeId(idNumber,name);
-            
-        }else if(id){
+    consultarModalidade(id: any, name:any): Modalidade|undefined{        
+        if(id){
             console.log("Com ID");
             const idNumber: number = parseInt(id, 10);
-            return this.productRepository.filtraProdutoPorId(idNumber);
-
-        }else if(name){
-            console.log("Name");
-            return this.productRepository.filtraProdutoPorNome(name);
+            return this.modalidadeRepository.filtraModalidadePorId(idNumber);
         }
         
         console.log(id)
         return undefined;
     }
-
-    getProducts(ordem:any):Product[]{
+    
+    getModalidade(ordem:any):Modalidade[]{
         if(ordem === "desc"){
-            return this.productRepository.filtraTodosProdutos().sort((a,b) => b.price - a.price);
+            return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => b.id - a.id);
         }
-        return this.productRepository.filtraTodosProdutos().sort((a,b) => a.price - b.price);
+        return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => a.id - b.id);
     }
-
-    deletarProduto(id:any){
-        const product = this.consultarProduto(id, undefined);
+    
+    deletarModalidades(id:any){
+        const product = this.consultarModalidade(id, undefined);
         if(!product){
-            throw new Error("Produto não encontrado");
+            throw new Error("Modalidade deletada com sucesso!!");
         }
 
-        this.productRepository.deletaProduto(product);
+        this.modalidadeRepository.deletarModalidades(product);
     }
-
-    atualizarProduto(produtoData: any): Product {
-        const {id, name, description, price } = produtoData;
-        if(!name || !description || !price ||!id ){
+    
+    atualizarModalidade(modalidadeData: any): Modalidade {
+        const {id, name, vegano} = modalidadeData;
+        if(!name || !id || vegano == null){
             throw new Error("Informações incompletas");
         }
 
-        let produtoEncontrado = this.consultarProduto(id,undefined);
-        if(!produtoEncontrado){
-            throw new Error("Produto não cadastrado!!!");
+        let modalidadeEncontrada = this.consultarModalidade(id,undefined);
+        if(!modalidadeEncontrada){
+            throw new Error("Modalidade atualizada com sucesso!!!");
         }
-        produtoEncontrado.description = description;
-        produtoEncontrado.name = name;
-        produtoEncontrado.price =price;
-        this.productRepository.atualizaProduto(produtoEncontrado);
-        return produtoEncontrado;
+        modalidadeEncontrada.id = id;
+        modalidadeEncontrada.name = name;
+        modalidadeEncontrada.vegano = vegano;
+        this.modalidadeRepository.atualizarModalidade (modalidadeEncontrada);
+        return modalidadeEncontrada;
+    }
+}
+
+////////
+
+export class EstoqueService{
+
+    estoqueRepository: EstoqueRepository = new EstoqueRepository();
+
+    adicionaEstoque(EstoqueData: any): Estoque {
+        const {estoqueId, quantidade, precoVenda} = EstoqueData;
+        if(!estoqueId || !quantidade || !precoVenda){
+            throw new Error("Informações incompletas");
+        }
+
+        const produtoEncontrado = this.buscarEstoque(estoqueId);
+        if(produtoEncontrado){
+            throw new Error("Modalidade já cadastrada!!!"); //retirar isso
+        }
+        const novoEstoque = new Estoque(estoqueId, quantidade, precoVenda);
+        this.estoqueRepository.insereEstoque(novoEstoque);
+        return novoEstoque;
+    }
+
+    buscarEstoque(id: any): Estoque|undefined{
+        if(id){
+            console.log("Com ID");
+            const itemNumber: number = parseInt(id, 10);
+            return this.estoqueRepository.buscaEstoquePorId(itemNumber);
+
+        }   
+        return undefined;
+    }
+   
+    getEstoque(ordem:any):Estoque[]{
+        if(ordem === "desc"){
+            return this.estoqueRepository.filtraTodoEstoque().sort((a, b) => b.estoqueId - a.estoqueId);
+        }
+        return this.estoqueRepository.filtraTodoEstoque().sort((a, b) => a.estoqueId - b.estoqueId);
+    }
+    /*
+    deletarModalidades(id:any){
+        const product = this.consultarProduto(id, undefined);
+        if(!product){
+            throw new Error("Modalidade não encontrada");
+        }
+
+        this.productRepository.deletarModalidades(product);
+    }
+    */
+    atualizarEstoque(estoqueData: any): Estoque {
+        const {id, estoqueId, quantidade, precoVenda} = estoqueData;
+        if(!id || !estoqueId || !quantidade || !precoVenda){
+            throw new Error("Informações incompletas");
+        }
+
+        let estoqueAtualizado = this.buscarEstoque(estoqueId);
+        if(!estoqueAtualizado){
+            throw new Error("Item não encontrado no estoque!!!");
+        }
+        estoqueAtualizado.estoqueId = estoqueId;
+        estoqueAtualizado.quantidade = quantidade;
+        estoqueAtualizado.precoVenda = precoVenda;
+        this.estoqueRepository.atualizarEstoque (estoqueAtualizado);
+        return estoqueAtualizado;
     }
 }
