@@ -58,3 +58,19 @@ class EstoqueRepository {
     }
 }
 exports.EstoqueRepository = EstoqueRepository;
+
+////
+class vendaRepository {
+    constructor(){
+        this.vendaList = [];
+    }
+    gravaVenda(venda){
+        this.vendaList.push(venda);
+    }
+    filtraVenda() {
+        return this.vendaList;
+    }
+    buscaVendaPorId(vendaId){
+        RETURN this.vendaList.find(venda => venda.vendaId === vendaId);
+    }
+}
