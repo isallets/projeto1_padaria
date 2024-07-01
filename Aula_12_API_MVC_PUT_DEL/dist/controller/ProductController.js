@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.atualizarEstoque = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidades = exports.listaModalidade = exports.cadastrarModalidade = void 0;
+exports.atualizarEstoque = exports.deletarEstoque = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidades = exports.listaModalidade = exports.cadastrarModalidade = void 0;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -78,16 +78,17 @@ function listarEstoque(req, res) {
 }
 exports.listarEstoque = listarEstoque;
 ;
-/*
-export function deletarModalidades(req: Request, res: Response){
-    try{
-        productService.deletarModalidades(req.query.id);
-        res.status(200).json({message: "Modalidade deletada com sucesso!"});
-    }catch(error:any){
-        res.status(400).json({message: error.message})
+function deletarEstoque(req, res) {
+    try {
+        estoqueService.deletarEstoque(req.query.id);
+        res.status(200).json({ message: "Item deletado com sucesso!" });
     }
-};
-*/
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+exports.deletarEstoque = deletarEstoque;
+;
 function atualizarEstoque(req, res) {
     try {
         const novoEstoque = estoqueService.atualizarEstoque(req.body);

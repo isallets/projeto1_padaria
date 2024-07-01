@@ -43,20 +43,18 @@ class EstoqueRepository {
     filtraTodoEstoque() {
         return this.estoqueList;
     }
-    /*
-        deletarEstoque(estoque:Estoque){
-            const index = this.estoqueList.indexOf(estoque);
-            if (index !== -1) {
-                this.estoqueList.splice(index, 1);
-            }
+    deletarEstoque(estoque) {
+        const index = this.estoqueList.indexOf(estoque);
+        if (index !== -1) {
+            this.estoqueList.splice(index, 1);
         }
-        */
+    }
     atualizarEstoque(estoque) {
         const index = this.estoqueList.indexOf(estoque);
         if (index !== -1) {
             this.estoqueList[index] = estoque;
         }
-        return index; //falta funcao pra adicioanr
+        return index;
     }
 }
 exports.EstoqueRepository = EstoqueRepository;

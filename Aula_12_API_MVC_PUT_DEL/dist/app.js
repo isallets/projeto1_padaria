@@ -8,7 +8,7 @@ const express_1 = __importDefault(require("express"));
 const ProductController_1 = require("./controller/ProductController");
 const ProductController_2 = require("./controller/ProductController");
 const app = (0, express_1.default)();
-const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 2000;
+const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
 app.use(express_1.default.json());
 function logInfo() {
     console.log(`API em execução no URL: http:localhost:${PORT}`);
@@ -21,7 +21,5 @@ app.delete("/api/modalidade", ProductController_1.deletarModalidades);
 app.post("/api/estoque", ProductController_2.adicionarEstoque);
 app.get("/api/estoque", ProductController_2.listarEstoque);
 app.put("/api/estoque", ProductController_2.atualizarEstoque);
-/*
-app.delete("/api/estoque", deletarEstoque, deletarEstoque);
-*/
+app.delete("/api/estoque", ProductController_2.deletarEstoque);
 app.listen(PORT, logInfo);

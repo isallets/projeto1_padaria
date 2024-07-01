@@ -36,11 +36,11 @@ class ModalidadeService {
         return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => a.id - b.id);
     }
     deletarModalidades(id) {
-        const product = this.consultarModalidade(id, undefined);
-        if (!product) {
+        const modalidade = this.consultarModalidade(id, undefined);
+        if (!modalidade) {
             throw new Error("Modalidade deletada com sucesso!!");
         }
-        this.modalidadeRepository.deletarModalidades(product);
+        this.modalidadeRepository.deletarModalidades(modalidade);
     }
     atualizarModalidade(modalidadeData) {
         const { id, name, vegano } = modalidadeData;
@@ -80,8 +80,8 @@ class EstoqueService {
     buscarEstoque(id) {
         if (id) {
             console.log("Com ID");
-            const itemNumber = parseInt(id, 10);
-            return this.estoqueRepository.buscaEstoquePorId(itemNumber);
+            const idNumber = parseInt(id, 10);
+            return this.estoqueRepository.buscaEstoquePorId(idNumber);
         }
         return undefined;
     }
@@ -91,19 +91,24 @@ class EstoqueService {
         }
         return this.estoqueRepository.filtraTodoEstoque().sort((a, b) => a.estoqueId - b.estoqueId);
     }
-    /*
-    deletarModalidades(id:any){
-        const product = this.consultarProduto(id, undefined);
-        if(!product){
-            throw new Error("Modalidade não encontrada");
+    deletarEstoque(estoqueData) {
+        const { estoqueId, quantidade, precoVenda } = estoqueData;
+        if (!estoqueData) {
+            throw new Error("Informações incompletas");
         }
-
-        this.productRepository.deletarModalidades(product);
+        let estoqueDeletado = this.buscarEstoque(estoqueId);
+        if (!estoqueDeletado) {
+            throw new Error("Item não encontrado no estoque!!!");
+        }
+        estoqueDeletado.estoqueId = estoqueId;
+        estoqueDeletado.quantidade -= quantidade;
+        estoqueDeletado.precoVenda = precoVenda;
+        this.estoqueRepository.deletarEstoque(estoqueDeletado);
+        return estoqueDeletado;
     }
-    */
     atualizarEstoque(estoqueData) {
-        const { id, estoqueId, quantidade, precoVenda } = estoqueData;
-        if (!id || !estoqueId || !quantidade || !precoVenda) {
+        const { estoqueId, quantidade, precoVenda } = estoqueData;
+        if (!estoqueData) {
             throw new Error("Informações incompletas");
         }
         let estoqueAtualizado = this.buscarEstoque(estoqueId);
@@ -111,7 +116,7 @@ class EstoqueService {
             throw new Error("Item não encontrado no estoque!!!");
         }
         estoqueAtualizado.estoqueId = estoqueId;
-        estoqueAtualizado.quantidade = quantidade;
+        estoqueAtualizado.quantidade += quantidade;
         estoqueAtualizado.precoVenda = precoVenda;
         this.estoqueRepository.atualizarEstoque(estoqueAtualizado);
         return estoqueAtualizado;

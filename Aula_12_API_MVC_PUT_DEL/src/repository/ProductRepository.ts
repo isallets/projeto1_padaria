@@ -47,19 +47,19 @@ export class EstoqueRepository {
     filtraTodoEstoque():Estoque[]{
         return this.estoqueList;
     }
-/*
+
     deletarEstoque(estoque:Estoque){
         const index = this.estoqueList.indexOf(estoque);
         if (index !== -1) {
             this.estoqueList.splice(index, 1);
         }
     }
-    */
+
     atualizarEstoque(estoque:Estoque): number{
         const index = this.estoqueList.indexOf(estoque);
         if(index !== -1){
             this.estoqueList[index] = estoque;
         }
-        return index; //falta funcao pra adicioanr
+        return index;
     }
 }

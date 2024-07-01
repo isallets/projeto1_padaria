@@ -76,16 +76,15 @@ export function listarEstoque (req: Request, res: Response){
     }
 };
 
-/*
-export function deletarModalidades(req: Request, res: Response){
+
+export function deletarEstoque(req: Request, res: Response){
     try{
-        productService.deletarModalidades(req.query.id);
-        res.status(200).json({message: "Modalidade deletada com sucesso!"});
+        estoqueService.deletarEstoque(req.query.id);
+        res.status(200).json({message: "Item deletado com sucesso!"});
     }catch(error:any){
         res.status(400).json({message: error.message})
     }
 };
-*/
 
 export function atualizarEstoque (req: Request, res: Response){
     try {
