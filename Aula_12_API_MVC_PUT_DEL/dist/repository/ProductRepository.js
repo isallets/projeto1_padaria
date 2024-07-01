@@ -71,6 +71,7 @@ class vendaRepository {
         return this.vendaList;
     }
     buscaVendaPorId(vendaId){
-        RETURN this.vendaList.find(venda => venda.vendaId === vendaId);
+        return this.vendaList.find(venda => venda.vendaId === vendaId);
     }
 }
+exports.vendaRepository = vendaRepository;
