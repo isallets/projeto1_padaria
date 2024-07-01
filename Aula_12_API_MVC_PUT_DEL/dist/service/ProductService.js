@@ -123,3 +123,32 @@ class EstoqueService {
     }
 }
 exports.EstoqueService = EstoqueService;
+
+////////
+class vendaService {
+    constructor(){
+        this.vendaRepository = new ProductRepository_1.vendaRepository();
+    }
+    adicionaVenda(vendaData){
+        const {vendaId, cpfCliente, valorTotal, itensComprados} = vendaData;
+        if (!vendaId || !cpfCliente || !valorTotal || !itensComprados ) {
+            throw new Error("Informações incompletas");
+        }
+        const vendaEncontrada = this.buscarVenda(vendaId);
+
+        const novaVenda = new Product_1.Venda(vendaId, cpfCliente, valorTotal, itensComprados);
+        novaVenda.valorTotal = precoVenda * quantidade;
+
+        this.vendaRepository.adicionaVenda(novaVenda);
+        return novaVenda;
+    }
+    buscarVenda(id){
+        if (id) {
+            console.log("Com ID");
+            const idNumber = parseInt(id, 10);
+            return this.vendaRepository.buscaVendaPorId(idNumber);
+        }
+        return undefined;
+    }
+}
+exports.vendaService = vendaService;
