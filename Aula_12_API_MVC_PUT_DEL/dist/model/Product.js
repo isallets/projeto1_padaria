@@ -18,3 +18,12 @@ class Estoque {
     }
 }
 exports.Estoque = Estoque;
+
+class Venda {
+    constructor(vendaId, cpfCliente, valorTotal, itensComprados){
+        this.vendaId = vendaId;
+        this.cpfCliente = cpfCliente;
+        this.valorTotal = valorTotal;
+        this.itensComprados = itensComprados;
+    }
+}
