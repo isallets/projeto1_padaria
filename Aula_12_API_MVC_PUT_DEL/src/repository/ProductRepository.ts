@@ -60,6 +60,6 @@ export class EstoqueRepository {
         if(index !== -1){
             this.estoqueList[index] = estoque;
         }
-        return index;
+        return index; //falta funcao pra adicioanr
     }
 }

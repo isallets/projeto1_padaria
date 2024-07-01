@@ -19,6 +19,7 @@ app.delete("/api/modalidade", deletarModalidades);
 app.post("/api/estoque", adicionarEstoque);
 app.get("/api/estoque",listarEstoque);
 app.put("/api/estoque", atualizarEstoque);
+
 /*
 app.delete("/api/estoque", deletarEstoque, deletarEstoque);
 */
