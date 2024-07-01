@@ -1,6 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.atualizarEstoque = exports.deletarEstoque = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidades = exports.listaModalidade = exports.cadastrarModalidade = void 0;
+exports.cadastrarModalidade = cadastrarModalidade;
+exports.listaModalidade = listaModalidade;
+exports.deletarModalidades = deletarModalidades;
+exports.atualizarModalidade = atualizarModalidade;
+exports.adicionarEstoque = adicionarEstoque;
+exports.listarEstoque = listarEstoque;
+exports.deletarEstoque = deletarEstoque;
+exports.atualizarEstoque = atualizarEstoque;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -15,7 +22,6 @@ function cadastrarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.cadastrarModalidade = cadastrarModalidade;
 ;
 function listaModalidade(req, res) {
     try {
@@ -25,7 +31,6 @@ function listaModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.listaModalidade = listaModalidade;
 ;
 function deletarModalidades(req, res) {
     try {
@@ -36,7 +41,6 @@ function deletarModalidades(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.deletarModalidades = deletarModalidades;
 ;
 function atualizarModalidade(req, res) {
     try {
@@ -50,7 +54,6 @@ function atualizarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.atualizarModalidade = atualizarModalidade;
 ;
 ///////
 const estoqueService = new ProductService_1.EstoqueService();
@@ -66,7 +69,6 @@ function adicionarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.adicionarEstoque = adicionarEstoque;
 ;
 function listarEstoque(req, res) {
     try {
@@ -76,7 +78,6 @@ function listarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.listarEstoque = listarEstoque;
 ;
 function deletarEstoque(req, res) {
     try {
@@ -87,7 +88,6 @@ function deletarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.deletarEstoque = deletarEstoque;
 ;
 function atualizarEstoque(req, res) {
     try {
@@ -101,5 +101,4 @@ function atualizarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.atualizarEstoque = atualizarEstoque;
 ;
