@@ -8,6 +8,7 @@ exports.adicionarEstoque = adicionarEstoque;
 exports.listarEstoque = listarEstoque;
 exports.deletarEstoque = deletarEstoque;
 exports.atualizarEstoque = atualizarEstoque;
+exports.adicionaVenda = adicionaVenda;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -95,6 +96,21 @@ function atualizarEstoque(req, res) {
         res.status(201).json({
             mensagem: "Estoque atualizado com sucesso!",
             estoque: novoEstoque
+        });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+;
+/////
+const vendaService = new ProductService_1.vendaService();
+function adicionaVenda(req, res) {
+    try {
+        const novaVenda = vendaService.adicionaVenda(req.body);
+        res.status(200).json({
+            mensagem: "Venda efetuada com sucesso",
+            venda: novaVenda
         });
     }
     catch (error) {
