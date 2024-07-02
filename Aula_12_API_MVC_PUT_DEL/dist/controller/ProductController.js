@@ -1,14 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cadastrarModalidade = cadastrarModalidade;
-exports.listaModalidade = listaModalidade;
-exports.deletarModalidades = deletarModalidades;
-exports.atualizarModalidade = atualizarModalidade;
-exports.adicionarEstoque = adicionarEstoque;
-exports.listarEstoque = listarEstoque;
-exports.deletarEstoque = deletarEstoque;
-exports.atualizarEstoque = atualizarEstoque;
-exports.adicionaVenda = adicionaVenda;
+exports.adicionaVenda = exports.atualizarEstoque = exports.deletarEstoque = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidades = exports.listaModalidade = exports.cadastrarModalidade = void 0;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -23,6 +15,7 @@ function cadastrarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.cadastrarModalidade = cadastrarModalidade;
 ;
 function listaModalidade(req, res) {
     try {
@@ -32,6 +25,7 @@ function listaModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.listaModalidade = listaModalidade;
 ;
 function deletarModalidades(req, res) {
     try {
@@ -42,6 +36,7 @@ function deletarModalidades(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.deletarModalidades = deletarModalidades;
 ;
 function atualizarModalidade(req, res) {
     try {
@@ -55,6 +50,7 @@ function atualizarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.atualizarModalidade = atualizarModalidade;
 ;
 ///////
 const estoqueService = new ProductService_1.EstoqueService();
@@ -70,6 +66,7 @@ function adicionarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.adicionarEstoque = adicionarEstoque;
 ;
 function listarEstoque(req, res) {
     try {
@@ -79,16 +76,19 @@ function listarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.listarEstoque = listarEstoque;
 ;
 function deletarEstoque(req, res) {
     try {
-        estoqueService.deletarEstoque(req.query.id);
+        const { id } = req.body;
+        estoqueService.deletarEstoque(id);
         res.status(200).json({ message: "Item deletado com sucesso!" });
     }
     catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.deletarEstoque = deletarEstoque;
 ;
 function atualizarEstoque(req, res) {
     try {
@@ -102,19 +102,21 @@ function atualizarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.atualizarEstoque = atualizarEstoque;
 ;
 /////
-const vendaService = new ProductService_1.vendaService();
+const vendaService = new ProductService_1.VendaService();
 function adicionaVenda(req, res) {
     try {
         const novaVenda = vendaService.adicionaVenda(req.body);
         res.status(200).json({
-            mensagem: "Venda efetuada com sucesso",
-            venda: novaVenda
+            mensagem: "Venda efetuada com sucesso!",
+            Venda: novaVenda
         });
     }
     catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.adicionaVenda = adicionaVenda;
 ;

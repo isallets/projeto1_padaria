@@ -1,8 +1,9 @@
 import express from "express";
 import {cadastrarModalidade, listaModalidade,atualizarModalidade, deletarModalidades} from "./controller/ProductController";
 import {adicionarEstoque, listarEstoque, atualizarEstoque, deletarEstoque} from "./controller/ProductController";
+import { adicionaVenda } from "./controller/ProductController";
 const app = express();
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 4000;
 app.use(express.json());
 
 
@@ -21,6 +22,9 @@ app.get("/api/estoque",listarEstoque);
 app.put("/api/estoque", atualizarEstoque);
 app.delete("/api/estoque", deletarEstoque);
 
+////
+
+app.post("/app/venda", adicionaVenda);
 
 app.listen(PORT, logInfo);
 

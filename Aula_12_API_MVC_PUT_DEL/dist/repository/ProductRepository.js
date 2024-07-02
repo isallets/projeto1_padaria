@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EstoqueRepository = exports.ModalidadeRepository = void 0;
+exports.VendaRepository = exports.EstoqueRepository = exports.ModalidadeRepository = void 0;
 class ModalidadeRepository {
     constructor() {
         this.modalidadeList = [];
@@ -38,17 +38,19 @@ class EstoqueRepository {
         this.estoqueList.push(estoque);
     }
     buscaEstoquePorId(estoqueId) {
-        return this.estoqueList.find(estoque => estoque.estoqueId === estoqueId);
+        return this.estoqueList.find(estoque => estoque.id === estoqueId);
     }
     filtraTodoEstoque() {
         return this.estoqueList;
     }
-    deletarEstoque(estoque) {
-        const index = this.estoqueList.indexOf(estoque);
-        if (index !== -1) {
-            this.estoqueList.splice(index, 1);
+    /*
+        deletarEstoque(estoque:Estoque){
+            const index = this.estoqueList.indexOf(estoque);
+            if (index !== -1) {
+                this.estoqueList.splice(index, 1);
+            }
         }
-    }
+    */
     atualizarEstoque(estoque) {
         const index = this.estoqueList.indexOf(estoque);
         if (index !== -1) {
@@ -58,20 +60,16 @@ class EstoqueRepository {
     }
 }
 exports.EstoqueRepository = EstoqueRepository;
-
 ////
-class vendaRepository {
-    constructor(){
+class VendaRepository {
+    constructor() {
         this.vendaList = [];
     }
-    gravaVenda(venda){
+    gravaVenda(venda) {
         this.vendaList.push(venda);
     }
-    filtraVenda() {
-        return this.vendaList;
-    }
-    buscaVendaPorId(vendaId){
+    buscaVendaPorId(vendaId) {
         return this.vendaList.find(venda => venda.vendaId === vendaId);
     }
 }
-exports.vendaRepository = vendaRepository;
+exports.VendaRepository = VendaRepository;

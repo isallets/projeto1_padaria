@@ -1,5 +1,5 @@
-import { Estoque, Modalidade } from "../model/Product";
-import { ModalidadeRepository, EstoqueRepository } from "../repository/ProductRepository";
+import { Estoque, Modalidade, Venda } from "../model/Product";
+import { ModalidadeRepository, EstoqueRepository, VendaRepository } from "../repository/ProductRepository";
 
 export class ModalidadeService{
 
@@ -11,7 +11,7 @@ export class ModalidadeService{
             throw new Error("Informações incompletas");
         }
 
-        const modalidadeEncontrado = this.consultarModalidade(undefined,name);
+        const modalidadeEncontrado = this.consultarModalidade(name);
         if(modalidadeEncontrado){
             throw new Error("Modalidade já cadastrada!!!");
         }
@@ -20,7 +20,7 @@ export class ModalidadeService{
         return novaModalidade;
     }
 
-    consultarModalidade(id: any, name:any): Modalidade|undefined{        
+    consultarModalidade(id: any): Modalidade|undefined{        
         if(id){
             console.log("Com ID");
             const idNumber: number = parseInt(id, 10);
@@ -39,7 +39,7 @@ export class ModalidadeService{
     }
     
     deletarModalidades(id:any){
-        const modalidade = this.consultarModalidade(id, undefined);
+        const modalidade = this.consultarModalidade(id);
         if(!modalidade){
             throw new Error("Modalidade deletada com sucesso!!");
         }
@@ -53,7 +53,7 @@ export class ModalidadeService{
             throw new Error("Informações incompletas");
         }
 
-        let modalidadeEncontrada = this.consultarModalidade(id,undefined);
+        let modalidadeEncontrada = this.consultarModalidade(id);
         if(!modalidadeEncontrada){
             throw new Error("Modalidade atualizada com sucesso!!!");
         }
@@ -72,8 +72,8 @@ export class EstoqueService{
     estoqueRepository: EstoqueRepository = new EstoqueRepository();
 
     adicionaEstoque(EstoqueData: any): Estoque {
-        const {estoqueId, quantidade, precoVenda} = EstoqueData;
-        if(!estoqueId || !quantidade || !precoVenda){
+        const {id, estoqueId, quantidade, precoVenda} = EstoqueData;
+        if(!estoqueId){
             throw new Error("Informações incompletas");
         }
 
@@ -81,19 +81,20 @@ export class EstoqueService{
         if(produtoEncontrado){
             throw new Error("Modalidade já cadastrada!!!"); //retirar isso
         }
-        const novoEstoque = new Estoque(estoqueId, quantidade, precoVenda);
+        const novoEstoque = new Estoque(id,estoqueId, quantidade, precoVenda);
         this.estoqueRepository.insereEstoque(novoEstoque);
         return novoEstoque;
     }
 
-    buscarEstoque(id: any): Estoque|undefined{
-        if(id){
+    buscarEstoque(estoqueId: any): Estoque|undefined{
+        const idNumber: number = parseInt(estoqueId, 10);
+
+        if(estoqueId){
             console.log("Com ID");
-            const idNumber: number = parseInt(id, 10);
             return this.estoqueRepository.buscaEstoquePorId(idNumber);
 
         }   
-        return undefined;
+        throw new Error ("Item não está no estoque!");
     }
    
     getEstoque(ordem:any):Estoque[]{
@@ -103,25 +104,8 @@ export class EstoqueService{
         return this.estoqueRepository.filtraTodoEstoque().sort((a, b) => a.estoqueId - b.estoqueId);
     }
     
-    deletarEstoque(estoqueData:any): Estoque{
-        const {estoqueId, quantidade, precoVenda} = estoqueData;
-        if(!estoqueData){
-            throw new Error("Informações incompletas");
-        }
-
-        let estoqueDeletado = this.buscarEstoque(estoqueId);
-        if(!estoqueDeletado){
-            throw new Error("Item não encontrado no estoque!!!");
-        }
-        estoqueDeletado.estoqueId = estoqueId;       
-        estoqueDeletado.quantidade -= quantidade;
-        estoqueDeletado.precoVenda = precoVenda;
-        this.estoqueRepository.deletarEstoque(estoqueDeletado);
-        return estoqueDeletado;
-    }
-    
-    atualizarEstoque(estoqueData: any): Estoque {
-        const {estoqueId, quantidade, precoVenda} = estoqueData;
+    deletarEstoque(estoqueData: any): Estoque {
+        const {id, estoqueId, quantidade, precoVenda} = estoqueData;
         if(!estoqueData){
             throw new Error("Informações incompletas");
         }
@@ -130,10 +114,56 @@ export class EstoqueService{
         if(!estoqueAtualizado){
             throw new Error("Item não encontrado no estoque!!!");
         }
+        estoqueAtualizado.id = id;
+        estoqueAtualizado.estoqueId = estoqueId;
+        estoqueAtualizado.quantidade -= quantidade;
+        estoqueAtualizado.precoVenda = precoVenda;
+        this.estoqueRepository.atualizarEstoque (estoqueAtualizado);
+        return estoqueAtualizado;
+    }
+    
+    atualizarEstoque(estoqueData: any): Estoque {
+        const {id, estoqueId, quantidade, precoVenda} = estoqueData;
+        if(!estoqueData){
+            throw new Error("Informações incompletas");
+        }
+
+        let estoqueAtualizado = this.buscarEstoque(estoqueId);
+        if(!estoqueAtualizado){
+            throw new Error("Item não encontrado no estoque!!!");
+        }
+        estoqueAtualizado.id = id;
         estoqueAtualizado.estoqueId = estoqueId;
         estoqueAtualizado.quantidade += quantidade;
         estoqueAtualizado.precoVenda = precoVenda;
         this.estoqueRepository.atualizarEstoque (estoqueAtualizado);
         return estoqueAtualizado;
+    }
+}
+
+////////
+
+export class VendaService {
+    vendaRepository: VendaRepository = new VendaRepository();
+
+    adicionaVenda(vendaData: any): Venda {
+        const {vendaId, cpfCliente, valorTotal, itensComprados} = vendaData;
+        if(!vendaData){
+            throw new Error("Informações incompletas");
+        }
+
+        const novaVenda = new Venda (vendaId, cpfCliente, valorTotal, itensComprados);
+        this.vendaRepository.gravaVenda(novaVenda);
+        return novaVenda;
+    }
+
+    buscaVenda(id: any): Venda|undefined{
+        if(id){
+            console.log("Com ID");
+            const idNumber: number = parseInt(id, 10);
+            return this.vendaRepository.buscaVendaPorId(idNumber);
+
+        }   
+        return undefined;
     }
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ModalidadeService, EstoqueService } from "../service/ProductService";
+import { ModalidadeService, EstoqueService, VendaService } from "../service/ProductService";
 
 const modalidadeService = new ModalidadeService();
 
@@ -79,7 +79,8 @@ export function listarEstoque (req: Request, res: Response){
 
 export function deletarEstoque(req: Request, res: Response){
     try{
-        estoqueService.deletarEstoque(req.query.id);
+        const { id } = req.body
+        estoqueService.deletarEstoque(id);
         res.status(200).json({message: "Item deletado com sucesso!"});
     }catch(error:any){
         res.status(400).json({message: error.message})
@@ -93,6 +94,23 @@ export function atualizarEstoque (req: Request, res: Response){
             {
                 mensagem:"Estoque atualizado com sucesso!",
                 estoque:novoEstoque
+            }
+            );
+    } catch (error: any) {
+        res.status(400).json({ message: error.message});
+    }
+};
+
+/////
+const vendaService = new VendaService();
+
+export function adicionaVenda (req: Request, res: Response){
+    try {
+        const novaVenda = vendaService.adicionaVenda(req.body);
+        res.status(200).json(
+            {
+                mensagem:"Venda efetuada com sucesso!",
+                Venda:novaVenda
             }
             );
     } catch (error: any) {

@@ -1,4 +1,4 @@
-import { Estoque, Modalidade } from "../model/Product";
+import { Estoque, Modalidade, Venda } from "../model/Product";
 
 export class ModalidadeRepository{
     modalidadeList: Modalidade[] = [];
@@ -40,26 +40,38 @@ export class EstoqueRepository {
         this.estoqueList.push(estoque);
     }
 
-    buscaEstoquePorId(estoqueId:number): Estoque|undefined{
+    buscaEstoquePorId(estoqueId:any): Estoque|undefined{
         return this.estoqueList.find(estoque => estoque.estoqueId === estoqueId);
     }
 
     filtraTodoEstoque():Estoque[]{
         return this.estoqueList;
     }
-
+/*
     deletarEstoque(estoque:Estoque){
         const index = this.estoqueList.indexOf(estoque);
         if (index !== -1) {
             this.estoqueList.splice(index, 1);
         }
     }
-
-    atualizarEstoque(estoque:Estoque): number{
+*/
+    atualizarEstoque(estoque:Estoque){
         const index = this.estoqueList.indexOf(estoque);
         if(index !== -1){
             this.estoqueList[index] = estoque;
         }
         return index;
+    }
+}
+
+////
+export class VendaRepository {
+    vendaList: Venda[] = [];
+    
+    gravaVenda(venda: Venda){
+        this.vendaList.push(venda);
+    }
+    buscaVendaPorId(vendaId:number): Venda|undefined{
+        return this.vendaList.find(venda => venda.vendaId === vendaId);
     }
 }
