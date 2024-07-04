@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adicionaVenda = exports.atualizarEstoque = exports.deletarEstoque = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidades = exports.listaModalidade = exports.cadastrarModalidade = void 0;
+exports.adicionaVenda = exports.atualizarEstoque = exports.deletarEstoque = exports.buscaEstoquePorId = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidade = exports.filtraModalidadePorId = exports.listaModalidade = exports.cadastrarModalidade = void 0;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -19,7 +19,7 @@ exports.cadastrarModalidade = cadastrarModalidade;
 ;
 function listaModalidade(req, res) {
     try {
-        res.status(200).json(modalidadeService.getModalidade(req.query.ordem));
+        res.status(200).json(modalidadeService.getModalidade(req.query.id)); //acho que nao precisa desse id
     }
     catch (error) {
         res.status(400).json({ message: error.message });
@@ -27,7 +27,22 @@ function listaModalidade(req, res) {
 }
 exports.listaModalidade = listaModalidade;
 ;
-function deletarModalidades(req, res) {
+function filtraModalidadePorId(req, res) {
+    try {
+        const modalidade = modalidadeService.consultarModalidade(req.query.id);
+        if (modalidade) {
+            res.status(200).json(modalidade);
+        }
+        else {
+            res.status(404).json({ message: "Modalidade não encontrada" });
+        }
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+exports.filtraModalidadePorId = filtraModalidadePorId;
+function deletarModalidade(req, res) {
     try {
         modalidadeService.deletarModalidades(req.query.id);
         res.status(200).json({ message: "Modalidade deletada com sucesso!" });
@@ -36,12 +51,12 @@ function deletarModalidades(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
-exports.deletarModalidades = deletarModalidades;
+exports.deletarModalidade = deletarModalidade;
 ;
 function atualizarModalidade(req, res) {
     try {
         const novaModalidade = modalidadeService.atualizarModalidade(req.body);
-        res.status(201).json({
+        res.status(200).json({
             mensagem: "Modalidade atualizado com sucesso!",
             modalidade: novaModalidade
         });
@@ -70,7 +85,7 @@ exports.adicionarEstoque = adicionarEstoque;
 ;
 function listarEstoque(req, res) {
     try {
-        res.status(200).json(estoqueService.getEstoque(req.query.ordem));
+        res.status(200).json(estoqueService.getEstoque(req.query.estoqueId));
     }
     catch (error) {
         res.status(400).json({ message: error.message });
@@ -78,11 +93,27 @@ function listarEstoque(req, res) {
 }
 exports.listarEstoque = listarEstoque;
 ;
+function buscaEstoquePorId(req, res) {
+    try {
+        const estoque = estoqueService.buscarEstoque(req.query.estoqueId);
+        if (estoque) {
+            res.status(200).json(estoque);
+        }
+        else {
+            res.status(404).json({ message: "Item não encontrado no estoque" });
+        }
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+exports.buscaEstoquePorId = buscaEstoquePorId;
 function deletarEstoque(req, res) {
     try {
-        const { id } = req.body;
-        estoqueService.deletarEstoque(id);
-        res.status(200).json({ message: "Item deletado com sucesso!" });
+        const novoEstoque = estoqueService.deletarEstoque(req.body);
+        res.status(200).json({ message: "Item deletado com sucesso!",
+            estoque: novoEstoque
+        });
     }
     catch (error) {
         res.status(400).json({ message: error.message });

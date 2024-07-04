@@ -9,12 +9,13 @@ class ModalidadeRepository {
         this.modalidadeList.push(modalidade);
     }
     filtraModalidadePorId(id) {
-        return this.modalidadeList.find(modalidade => modalidade.id === id);
+        const idNumber = parseInt(id, 10);
+        return this.modalidadeList.find(modalidade => modalidade.id === idNumber);
     }
     filtraTodasModalidades() {
         return this.modalidadeList;
     }
-    deletarModalidades(modalidade) {
+    deletarModalidade(modalidade) {
         const index = this.modalidadeList.indexOf(modalidade);
         if (index !== -1) {
             this.modalidadeList.splice(index, 1);
@@ -38,19 +39,20 @@ class EstoqueRepository {
         this.estoqueList.push(estoque);
     }
     buscaEstoquePorId(estoqueId) {
-        return this.estoqueList.find(estoque => estoque.id === estoqueId);
+        const idNumber = parseInt(estoqueId, 10);
+        return this.estoqueList.find(estoque => estoque.estoqueId === idNumber);
     }
     filtraTodoEstoque() {
         return this.estoqueList;
     }
     /*
-        deletarEstoque(estoque:Estoque){
+        deletarModalidade(estoque:Estoque){
             const index = this.estoqueList.indexOf(estoque);
             if (index !== -1) {
                 this.estoqueList.splice(index, 1);
             }
         }
-    */
+        */
     atualizarEstoque(estoque) {
         const index = this.estoqueList.indexOf(estoque);
         if (index !== -1) {

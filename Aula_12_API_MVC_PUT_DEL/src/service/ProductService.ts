@@ -11,7 +11,7 @@ export class ModalidadeService{
             throw new Error("Informações incompletas");
         }
 
-        const modalidadeEncontrado = this.consultarModalidade(name);
+        const modalidadeEncontrado = this.consultarModalidade(id);
         if(modalidadeEncontrado){
             throw new Error("Modalidade já cadastrada!!!");
         }
@@ -21,18 +21,16 @@ export class ModalidadeService{
     }
 
     consultarModalidade(id: any): Modalidade|undefined{        
+        const idNumber: number = parseInt(id, 10); 
         if(id){
-            console.log("Com ID");
-            const idNumber: number = parseInt(id, 10);
+            console.log(id);
             return this.modalidadeRepository.filtraModalidadePorId(idNumber);
         }
-        
-        console.log(id)
-        return undefined;
+        return undefined; 
     }
     
-    getModalidade(ordem:any):Modalidade[]{
-        if(ordem === "desc"){
+    getModalidade(id:any):Modalidade[]{
+        if(id === "desc"){
             return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => b.id - a.id);
         }
         return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => a.id - b.id);
@@ -41,10 +39,10 @@ export class ModalidadeService{
     deletarModalidades(id:any){
         const modalidade = this.consultarModalidade(id);
         if(!modalidade){
-            throw new Error("Modalidade deletada com sucesso!!");
+            throw new Error("Modalidade não encontrada!!");
         }
 
-        this.modalidadeRepository.deletarModalidades(modalidade);
+        this.modalidadeRepository.deletarModalidade(modalidade); //SUBSTITUIR ACAO DENTRO DO IF
     }
     
     atualizarModalidade(modalidadeData: any): Modalidade {
@@ -90,7 +88,7 @@ export class EstoqueService{
         const idNumber: number = parseInt(estoqueId, 10);
 
         if(estoqueId){
-            console.log("Com ID");
+            console.log(estoqueId);
             return this.estoqueRepository.buscaEstoquePorId(idNumber);
 
         }   

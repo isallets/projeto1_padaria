@@ -12,7 +12,7 @@ class ModalidadeService {
         if (!id || !name || vegano == null) {
             throw new Error("Informações incompletas");
         }
-        const modalidadeEncontrado = this.consultarModalidade(name);
+        const modalidadeEncontrado = this.consultarModalidade(id);
         if (modalidadeEncontrado) {
             throw new Error("Modalidade já cadastrada!!!");
         }
@@ -21,16 +21,15 @@ class ModalidadeService {
         return novaModalidade;
     }
     consultarModalidade(id) {
+        const idNumber = parseInt(id, 10);
         if (id) {
-            console.log("Com ID");
-            const idNumber = parseInt(id, 10);
+            console.log(id);
             return this.modalidadeRepository.filtraModalidadePorId(idNumber);
         }
-        console.log(id);
         return undefined;
     }
-    getModalidade(ordem) {
-        if (ordem === "desc") {
+    getModalidade(id) {
+        if (id === "desc") {
             return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => b.id - a.id);
         }
         return this.modalidadeRepository.filtraTodasModalidades().sort((a, b) => a.id - b.id);
@@ -38,9 +37,9 @@ class ModalidadeService {
     deletarModalidades(id) {
         const modalidade = this.consultarModalidade(id);
         if (!modalidade) {
-            throw new Error("Modalidade deletada com sucesso!!");
+            throw new Error("Modalidade não encontrada!!");
         }
-        this.modalidadeRepository.deletarModalidades(modalidade);
+        this.modalidadeRepository.deletarModalidade(modalidade); //SUBSTITUIR ACAO DENTRO DO IF
     }
     atualizarModalidade(modalidadeData) {
         const { id, name, vegano } = modalidadeData;
@@ -80,7 +79,7 @@ class EstoqueService {
     buscarEstoque(estoqueId) {
         const idNumber = parseInt(estoqueId, 10);
         if (estoqueId) {
-            console.log("Com ID");
+            console.log(estoqueId);
             return this.estoqueRepository.buscaEstoquePorId(idNumber);
         }
         throw new Error("Item não está no estoque!");
