@@ -32,9 +32,9 @@ export class Venda {
     vendaId: number;
     cpfCliente: any;
     valorTotal: number;
-    itensComprados: any;
+    itensComprados: item[];
 
-    constructor(vendaId: number, cpfCliente: any, valorTotal: number, itensComprados: any){
+    constructor(vendaId: number, cpfCliente: any, valorTotal: number, itensComprados: item[]){
         this.vendaId = vendaId;
         this.cpfCliente = cpfCliente;
         this.valorTotal = valorTotal;
