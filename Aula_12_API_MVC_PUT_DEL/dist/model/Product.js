@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Venda = exports.Estoque = exports.Modalidade = void 0;
+exports.Estoque = exports.Modalidade = void 0;
 class Modalidade {
     constructor(id, name, vegano) {
         this.id = id;
@@ -21,12 +21,18 @@ class Estoque {
 }
 exports.Estoque = Estoque;
 ///////
-class Venda {
-    constructor(vendaId, cpfCliente, valorTotal, itensComprados) {
+/*
+export class Venda {
+    vendaId: any;
+    cpfCliente: any;
+    valorTotal: number;
+    itensComprados: Estoque[];
+
+    constructor(vendaId: any, cpfCliente: any, valorTotal: number, itensComprados: Estoque[]){
         this.vendaId = vendaId;
         this.cpfCliente = cpfCliente;
         this.valorTotal = valorTotal;
         this.itensComprados = itensComprados;
     }
 }
-exports.Venda = Venda;
+*/

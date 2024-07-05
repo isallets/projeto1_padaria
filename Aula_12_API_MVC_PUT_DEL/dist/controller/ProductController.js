@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adicionaVenda = exports.atualizarEstoque = exports.deletarEstoque = exports.buscaEstoquePorId = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidade = exports.filtraModalidadePorId = exports.listaModalidade = exports.cadastrarModalidade = void 0;
+exports.atualizarEstoque = exports.deletarEstoque = exports.buscaEstoquePorId = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidade = exports.filtraModalidadePorId = exports.listaModalidade = exports.cadastrarModalidade = void 0;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -19,7 +19,7 @@ exports.cadastrarModalidade = cadastrarModalidade;
 ;
 function listaModalidade(req, res) {
     try {
-        res.status(200).json(modalidadeService.getModalidade(req.query.id)); //acho que nao precisa desse id
+        res.status(200).json(modalidadeService.getModalidade(req.query.id));
     }
     catch (error) {
         res.status(400).json({ message: error.message });
@@ -136,18 +136,20 @@ function atualizarEstoque(req, res) {
 exports.atualizarEstoque = atualizarEstoque;
 ;
 /////
-const vendaService = new ProductService_1.VendaService();
-function adicionaVenda(req, res) {
+/*
+const vendaService = new VendaService();
+
+export function adicionaVenda (req: Request, res: Response){
     try {
         const novaVenda = vendaService.adicionaVenda(req.body);
-        res.status(200).json({
-            mensagem: "Venda efetuada com sucesso!",
-            Venda: novaVenda
-        });
+        res.status(200).json(
+            {
+                mensagem:"Venda efetuada com sucesso!",
+                Venda:novaVenda
+            }
+            );
+    } catch (error: any) {
+        res.status(400).json({ message: error.message});
     }
-    catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-}
-exports.adicionaVenda = adicionaVenda;
-;
+};
+*/ 

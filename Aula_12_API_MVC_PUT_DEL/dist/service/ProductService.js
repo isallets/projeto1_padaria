@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VendaService = exports.EstoqueService = exports.ModalidadeService = void 0;
+exports.EstoqueService = exports.ModalidadeService = void 0;
 const Product_1 = require("../model/Product");
 const ProductRepository_1 = require("../repository/ProductRepository");
 class ModalidadeService {
@@ -65,7 +65,7 @@ class EstoqueService {
     }
     adicionaEstoque(EstoqueData) {
         const { id, estoqueId, quantidade, precoVenda } = EstoqueData;
-        if (!estoqueId) {
+        if (!id || !estoqueId || !quantidade || !precoVenda) {
             throw new Error("Informações incompletas");
         }
         const produtoEncontrado = this.buscarEstoque(estoqueId);
@@ -92,7 +92,7 @@ class EstoqueService {
     }
     deletarEstoque(estoqueData) {
         const { id, estoqueId, quantidade, precoVenda } = estoqueData;
-        if (!estoqueData) {
+        if (!id || !estoqueId || !quantidade || !precoVenda) {
             throw new Error("Informações incompletas");
         }
         let estoqueAtualizado = this.buscarEstoque(estoqueId);
@@ -108,7 +108,7 @@ class EstoqueService {
     }
     atualizarEstoque(estoqueData) {
         const { id, estoqueId, quantidade, precoVenda } = estoqueData;
-        if (!estoqueData) {
+        if (!id || !estoqueId || !quantidade || !precoVenda) {
             throw new Error("Informações incompletas");
         }
         let estoqueAtualizado = this.buscarEstoque(estoqueId);
@@ -125,26 +125,32 @@ class EstoqueService {
 }
 exports.EstoqueService = EstoqueService;
 ////////
-class VendaService {
-    constructor() {
-        this.vendaRepository = new ProductRepository_1.VendaRepository();
-    }
-    adicionaVenda(vendaData) {
-        const { vendaId, cpfCliente, valorTotal, itensComprados } = vendaData;
-        if (!vendaData) {
+/*
+export class VendaService {
+    vendaRepository: VendaRepository = new VendaRepository();
+
+    adicionaVenda(vendaData: any): Venda {
+        let valorTotal:number;
+
+        const {vendaId, cpfCliente, valorTotal, itensComprados} = vendaData;
+        if(!vendaData){
             throw new Error("Informações incompletas");
         }
-        const novaVenda = new Product_1.Venda(vendaId, cpfCliente, valorTotal, itensComprados);
-        this.vendaRepository.gravaVenda(novaVenda);
+        let estoque: Estoque = this.buscarEstoque(itensComprados.estoqueId);
+
+        const novaVenda = new Venda (vendaId, cpfCliente, valorTotal, itensComprados);
+        this.vendaRepository.criaVenda(novaVenda);
         return novaVenda;
     }
-    buscaVenda(id) {
-        if (id) {
+
+    buscaVenda(id: any): Venda|undefined{
+        if(id){
             console.log("Com ID");
-            const idNumber = parseInt(id, 10);
+            const idNumber: number = parseInt(id, 10);
             return this.vendaRepository.buscaVendaPorId(idNumber);
+
         }
         return undefined;
     }
 }
-exports.VendaService = VendaService;
+*/ 

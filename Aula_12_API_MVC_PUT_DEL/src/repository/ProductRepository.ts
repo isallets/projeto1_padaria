@@ -1,4 +1,4 @@
-import { Estoque, Modalidade, Venda } from "../model/Product";
+import { Estoque, Modalidade } from "../model/Product";
 
 export class ModalidadeRepository{
     modalidadeList: Modalidade[] = [];
@@ -68,13 +68,16 @@ export class EstoqueRepository {
 }
 
 ////
+/*
 export class VendaRepository {
-    vendaList: Venda[] = [];
+    itensComprados: Venda[] = [];
     
-    gravaVenda(venda: Venda){
-        this.vendaList.push(venda);
+    criaVenda(venda: Venda){
+        this.itensComprados.push(venda);
     }
-    buscaVendaPorId(vendaId:number): Venda|undefined{
-        return this.vendaList.find(venda => venda.vendaId === vendaId);
+    buscaVendaPorId(vendaId:any): Venda|undefined{
+        const idNumber = parseInt(vendaId, 10);
+        return this.itensComprados.find(venda => venda.vendaId === idNumber);
     }
 }
+*/

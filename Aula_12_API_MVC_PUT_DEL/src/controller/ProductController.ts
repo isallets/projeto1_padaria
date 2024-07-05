@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ModalidadeService, EstoqueService, VendaService } from "../service/ProductService";
+import { ModalidadeService, EstoqueService } from "../service/ProductService";
 
 const modalidadeService = new ModalidadeService();
 
@@ -20,7 +20,7 @@ export function cadastrarModalidade (req: Request, res: Response){
 
 export function listaModalidade (req: Request, res: Response){
     try {
-        res.status(200).json(modalidadeService.getModalidade(req.query.id));//acho que nao precisa desse id
+        res.status(200).json(modalidadeService.getModalidade(req.query.id));
     } catch (error: any) {
         res.status(400).json({ message: error.message});
     }
@@ -132,6 +132,7 @@ export function atualizarEstoque (req: Request, res: Response){
 };
 
 /////
+/*
 const vendaService = new VendaService();
 
 export function adicionaVenda (req: Request, res: Response){
@@ -147,3 +148,4 @@ export function adicionaVenda (req: Request, res: Response){
         res.status(400).json({ message: error.message});
     }
 };
+*/

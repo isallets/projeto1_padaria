@@ -27,17 +27,18 @@ export class Estoque{
 }
 
 ///////
-
+/*
 export class Venda {
-    vendaId: number;
+    vendaId: any;
     cpfCliente: any;
     valorTotal: number;
-    itensComprados: item[];
+    itensComprados: Estoque[];
 
-    constructor(vendaId: number, cpfCliente: any, valorTotal: number, itensComprados: item[]){
+    constructor(vendaId: any, cpfCliente: any, valorTotal: number, itensComprados: Estoque[]){
         this.vendaId = vendaId;
         this.cpfCliente = cpfCliente;
         this.valorTotal = valorTotal;
         this.itensComprados = itensComprados;
     }
 }
+*/

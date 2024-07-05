@@ -1,5 +1,5 @@
-import { Estoque, Modalidade, Venda } from "../model/Product";
-import { ModalidadeRepository, EstoqueRepository, VendaRepository } from "../repository/ProductRepository";
+import { Estoque, Modalidade } from "../model/Product";
+import { ModalidadeRepository, EstoqueRepository} from "../repository/ProductRepository";
 
 export class ModalidadeService{
 
@@ -71,7 +71,7 @@ export class EstoqueService{
 
     adicionaEstoque(EstoqueData: any): Estoque {
         const {id, estoqueId, quantidade, precoVenda} = EstoqueData;
-        if(!estoqueId){
+        if(!id || !estoqueId || !quantidade || !precoVenda){
             throw new Error("Informações incompletas");
         }
 
@@ -104,7 +104,7 @@ export class EstoqueService{
     
     deletarEstoque(estoqueData: any): Estoque {
         const {id, estoqueId, quantidade, precoVenda} = estoqueData;
-        if(!estoqueData){
+        if(!id || !estoqueId || !quantidade || !precoVenda){
             throw new Error("Informações incompletas");
         }
 
@@ -122,7 +122,7 @@ export class EstoqueService{
     
     atualizarEstoque(estoqueData: any): Estoque {
         const {id, estoqueId, quantidade, precoVenda} = estoqueData;
-        if(!estoqueData){
+        if(!id || !estoqueId || !quantidade || !precoVenda){
             throw new Error("Informações incompletas");
         }
 
@@ -140,18 +140,21 @@ export class EstoqueService{
 }
 
 ////////
-
+/*
 export class VendaService {
     vendaRepository: VendaRepository = new VendaRepository();
 
     adicionaVenda(vendaData: any): Venda {
+        let valorTotal:number;
+
         const {vendaId, cpfCliente, valorTotal, itensComprados} = vendaData;
         if(!vendaData){
             throw new Error("Informações incompletas");
         }
+        let estoque: Estoque = this.buscarEstoque(itensComprados.estoqueId);
 
         const novaVenda = new Venda (vendaId, cpfCliente, valorTotal, itensComprados);
-        this.vendaRepository.gravaVenda(novaVenda);
+        this.vendaRepository.criaVenda(novaVenda);
         return novaVenda;
     }
 
@@ -165,3 +168,4 @@ export class VendaService {
         return undefined;
     }
 }
+*/

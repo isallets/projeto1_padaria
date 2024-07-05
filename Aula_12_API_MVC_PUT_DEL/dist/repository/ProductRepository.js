@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VendaRepository = exports.EstoqueRepository = exports.ModalidadeRepository = void 0;
+exports.EstoqueRepository = exports.ModalidadeRepository = void 0;
 class ModalidadeRepository {
     constructor() {
         this.modalidadeList = [];
@@ -63,15 +63,16 @@ class EstoqueRepository {
 }
 exports.EstoqueRepository = EstoqueRepository;
 ////
-class VendaRepository {
-    constructor() {
-        this.vendaList = [];
+/*
+export class VendaRepository {
+    itensComprados: Venda[] = [];
+    
+    criaVenda(venda: Venda){
+        this.itensComprados.push(venda);
     }
-    gravaVenda(venda) {
-        this.vendaList.push(venda);
-    }
-    buscaVendaPorId(vendaId) {
-        return this.vendaList.find(venda => venda.vendaId === vendaId);
+    buscaVendaPorId(vendaId:any): Venda|undefined{
+        const idNumber = parseInt(vendaId, 10);
+        return this.itensComprados.find(venda => venda.vendaId === idNumber);
     }
 }
-exports.VendaRepository = VendaRepository;
+*/ 
