@@ -68,6 +68,7 @@ export class ModalidadeService{
 export class EstoqueService{
 
     estoqueRepository: EstoqueRepository = new EstoqueRepository();
+    modalidadeRepository: ModalidadeRepository = new ModalidadeRepository();
 
     adicionaEstoque(EstoqueData: any): Estoque {
         const {id, estoqueId, quantidade, precoVenda} = EstoqueData;
@@ -76,7 +77,7 @@ export class EstoqueService{
         }
         const produtoEncontrado = this.buscarEstoque(estoqueId);
         if(produtoEncontrado){
-            throw new Error("Produto já cadastrado!!!"); //retirar isso
+            throw new Error("Produto já cadastrado!!!");
         }
         const novoEstoque = new Estoque(id,estoqueId, quantidade, precoVenda);
         this.estoqueRepository.insereEstoque(novoEstoque);

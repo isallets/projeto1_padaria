@@ -69,13 +69,9 @@ class EstoqueService {
         if (!id || !estoqueId || !quantidade || !precoVenda) {
             throw new Error("Informações incompletas");
         }
-        const modalidade = this.modalidadeRepository.filtraModalidadePorId(id);
-        if (!modalidade) {
-            throw new Error("Modalidade não encontrada para o estoqueId fornecido");
-        }
         const produtoEncontrado = this.buscarEstoque(estoqueId);
         if (produtoEncontrado) {
-            throw new Error("Produto já cadastrado!!!"); //retirar isso
+            throw new Error("Produto já cadastrado!!!");
         }
         const novoEstoque = new Product_1.Estoque(id, estoqueId, quantidade, precoVenda);
         this.estoqueRepository.insereEstoque(novoEstoque);

@@ -1,17 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cadastrarModalidade = cadastrarModalidade;
-exports.listaModalidade = listaModalidade;
-exports.filtraModalidadePorId = filtraModalidadePorId;
-exports.deletarModalidade = deletarModalidade;
-exports.atualizarModalidade = atualizarModalidade;
-exports.adicionarEstoque = adicionarEstoque;
-exports.listarEstoque = listarEstoque;
-exports.buscaEstoquePorId = buscaEstoquePorId;
-exports.deletarEstoque = deletarEstoque;
-exports.atualizarEstoque = atualizarEstoque;
-exports.adicionaVenda = adicionaVenda;
-exports.buscaVenda = buscaVenda;
+exports.buscaVenda = exports.adicionaVenda = exports.atualizarEstoque = exports.deletarEstoque = exports.buscaEstoquePorId = exports.listarEstoque = exports.adicionarEstoque = exports.atualizarModalidade = exports.deletarModalidade = exports.filtraModalidadePorId = exports.listaModalidade = exports.cadastrarModalidade = void 0;
 const ProductService_1 = require("../service/ProductService");
 const modalidadeService = new ProductService_1.ModalidadeService();
 function cadastrarModalidade(req, res) {
@@ -26,6 +15,7 @@ function cadastrarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.cadastrarModalidade = cadastrarModalidade;
 ;
 function listaModalidade(req, res) {
     try {
@@ -35,6 +25,7 @@ function listaModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.listaModalidade = listaModalidade;
 ;
 function filtraModalidadePorId(req, res) {
     try {
@@ -50,6 +41,7 @@ function filtraModalidadePorId(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.filtraModalidadePorId = filtraModalidadePorId;
 function deletarModalidade(req, res) {
     try {
         modalidadeService.deletarModalidades(req.query.id);
@@ -59,6 +51,7 @@ function deletarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.deletarModalidade = deletarModalidade;
 ;
 function atualizarModalidade(req, res) {
     try {
@@ -72,6 +65,7 @@ function atualizarModalidade(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.atualizarModalidade = atualizarModalidade;
 ;
 ///////
 const estoqueService = new ProductService_1.EstoqueService();
@@ -87,6 +81,7 @@ function adicionarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.adicionarEstoque = adicionarEstoque;
 ;
 function listarEstoque(req, res) {
     try {
@@ -96,6 +91,7 @@ function listarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.listarEstoque = listarEstoque;
 ;
 function buscaEstoquePorId(req, res) {
     try {
@@ -111,6 +107,7 @@ function buscaEstoquePorId(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.buscaEstoquePorId = buscaEstoquePorId;
 function deletarEstoque(req, res) {
     try {
         const novoEstoque = estoqueService.deletarEstoque(req.body);
@@ -122,6 +119,7 @@ function deletarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.deletarEstoque = deletarEstoque;
 ;
 function atualizarEstoque(req, res) {
     try {
@@ -135,6 +133,7 @@ function atualizarEstoque(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.atualizarEstoque = atualizarEstoque;
 ;
 /////
 const vendaService = new ProductService_1.VendaService();
@@ -151,6 +150,7 @@ function adicionaVenda(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.adicionaVenda = adicionaVenda;
 ;
 function buscaVenda(req, res) {
     try {
@@ -166,3 +166,4 @@ function buscaVenda(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+exports.buscaVenda = buscaVenda;

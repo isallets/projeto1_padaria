@@ -50,14 +50,6 @@ export class EstoqueRepository {
     filtraTodoEstoque(){
         return this.estoqueList;
     }
-/*
-    deletarModalidade(estoque:Estoque){
-        const index = this.estoqueList.indexOf(estoque);
-        if (index !== -1) {
-            this.estoqueList.splice(index, 1);
-        }
-    }
-    */
 
     atualizarEstoque(estoque:Estoque){
         const index = this.estoqueList.indexOf(estoque);
