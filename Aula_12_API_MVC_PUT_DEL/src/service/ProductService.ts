@@ -117,14 +117,16 @@ export class EstoqueService{
         if(!estoqueAtualizado){
             throw new Error("Item não encontrado no estoque!!!");
         }
-        if(estoqueAtualizado.estoqueId < quantidade){
+        if(estoqueAtualizado.quantidade < quantidade){
             throw new Error("Quantidade informada é superior!")
         }
+        else{
         estoqueAtualizado.id = id;
         estoqueAtualizado.estoqueId = estoqueId;
         estoqueAtualizado.quantidade -= quantidade;
         estoqueAtualizado.precoVenda = precoVenda;
         this.estoqueRepository.atualizarEstoque (estoqueAtualizado);
+        }
         return estoqueAtualizado;
     }
     

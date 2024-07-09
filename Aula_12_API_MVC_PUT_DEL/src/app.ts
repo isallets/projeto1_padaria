@@ -3,7 +3,7 @@ import {cadastrarModalidade, listaModalidade,atualizarModalidade, deletarModalid
 import {adicionarEstoque, listarEstoque, atualizarEstoque, deletarEstoque, buscaEstoquePorId} from "./controller/ProductController";
 import { adicionaVenda, buscaVenda } from "./controller/ProductController";
 const app = express();
-const PORT = process.env.PORT ?? 5900;
+const PORT = process.env.PORT ?? 6900;
 app.use(express.json());
 
 

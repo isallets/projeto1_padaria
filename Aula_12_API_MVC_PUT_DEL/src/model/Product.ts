@@ -13,12 +13,12 @@ export class Modalidade{
 ////////
 
 export class Estoque{
-    id: any;
+    id: Modalidade;
     estoqueId:any;
     quantidade:number=0;
     precoVenda:number;
 
-    constructor(id: any, estoqueId: any, quatidade:number, precoVenda:number){
+    constructor(id: Modalidade, estoqueId: any, quatidade:number, precoVenda:number){
         this.id = id;
         this.estoqueId = estoqueId;
         this.quantidade = quatidade;
