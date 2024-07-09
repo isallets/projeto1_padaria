@@ -77,7 +77,7 @@ export class EstoqueService{
             throw new Error("Informações incompletas");
         }
         const modalidadeEncontrado = this.modalidadeService.consultarModalidade(id);
-        if(!modalidadeEncontrado){
+        if(modalidadeEncontrado){
             throw new Error("Modalidade não cadastrada!!!");
         }
         const produtoEncontrado = this.estoqueRepository.buscaEstoquePorId(estoqueId);
@@ -116,6 +116,9 @@ export class EstoqueService{
         let estoqueAtualizado = this.buscarEstoque(estoqueId);
         if(!estoqueAtualizado){
             throw new Error("Item não encontrado no estoque!!!");
+        }
+        if(estoqueAtualizado.estoqueId < quantidade){
+            throw new Error("Quantidade informada é superior!")
         }
         estoqueAtualizado.id = id;
         estoqueAtualizado.estoqueId = estoqueId;
