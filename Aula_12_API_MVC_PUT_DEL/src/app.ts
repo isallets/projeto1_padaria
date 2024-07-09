@@ -1,9 +1,9 @@
 import express from "express";
 import {cadastrarModalidade, listaModalidade,atualizarModalidade, deletarModalidade, filtraModalidadePorId, } from "./controller/ProductController";
 import {adicionarEstoque, listarEstoque, atualizarEstoque, deletarEstoque, buscaEstoquePorId} from "./controller/ProductController";
-//import { adicionaVenda } from "./controller/ProductController";
+import { adicionaVenda, buscaVenda } from "./controller/ProductController";
 const app = express();
-const PORT = process.env.PORT ?? 4600;
+const PORT = process.env.PORT ?? 7700;
 app.use(express.json());
 
 
@@ -26,7 +26,8 @@ app.get("/api/estoque", buscaEstoquePorId);
 
 ////
 
-//app.post("/app/venda", adicionaVenda);
+app.post("/api/venda", adicionaVenda);
+app.get("/api/venda", buscaVenda);
 
 app.listen(PORT, logInfo);
 

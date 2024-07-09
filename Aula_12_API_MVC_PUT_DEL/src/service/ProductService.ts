@@ -1,5 +1,5 @@
-import { Estoque, Modalidade } from "../model/Product";
-import { ModalidadeRepository, EstoqueRepository} from "../repository/ProductRepository";
+import { Estoque, Modalidade, Venda, ItemVenda } from "../model/Product";
+import { ModalidadeRepository, EstoqueRepository, VendaRepository} from "../repository/ProductRepository";
 
 export class ModalidadeService{
 
@@ -74,10 +74,9 @@ export class EstoqueService{
         if(!id || !estoqueId || !quantidade || !precoVenda){
             throw new Error("Informações incompletas");
         }
-
         const produtoEncontrado = this.buscarEstoque(estoqueId);
         if(produtoEncontrado){
-            throw new Error("Modalidade já cadastrada!!!"); //retirar isso
+            throw new Error("Produto já cadastrado!!!"); //retirar isso
         }
         const novoEstoque = new Estoque(id,estoqueId, quantidade, precoVenda);
         this.estoqueRepository.insereEstoque(novoEstoque);
@@ -140,32 +139,60 @@ export class EstoqueService{
 }
 
 ////////
-/*
+
 export class VendaService {
     vendaRepository: VendaRepository = new VendaRepository();
-
-    adicionaVenda(vendaData: any): Venda {
-        let valorTotal:number;
-
-        const {vendaId, cpfCliente, valorTotal, itensComprados} = vendaData;
-        if(!vendaData){
+    estoqueRepository: EstoqueRepository = new EstoqueRepository();
+    modalidadeRepository: ModalidadeRepository = new ModalidadeRepository();
+    
+    adicionaVenda(vendaId: string, cpfCliente: string, itensVenda: { estoqueId: any, quantidade: number }[]): Venda | undefined {
+       if(!vendaId || !cpfCliente || !itensVenda){
             throw new Error("Informações incompletas");
         }
-        let estoque: Estoque = this.buscarEstoque(itensComprados.estoqueId);
+        const itens: ItemVenda[] = [];
+        let valorTotal = 0;
 
-        const novaVenda = new Venda (vendaId, cpfCliente, valorTotal, itensComprados);
+        const vendaEncontrada = this.buscaVenda(vendaId);
+        if(vendaEncontrada){
+            throw new Error("Venda já realizada!!!"); 
+        }
+        for (const item of itensVenda) {
+            const modalidade = this.modalidadeRepository.filtraModalidadePorId(item.estoqueId);
+
+            if (!modalidade) {
+               throw new Error(`Modalidade não encontrada`);
+            }
+            
+            const produto = this.estoqueRepository.buscaEstoquePorId(item.estoqueId);
+            if(!produto){
+                throw new Error("Produto não encontrado");
+            }
+            if(produto.quantidade < item.quantidade){
+                throw new Error("Estoque insuficiente");
+            }
+
+            const novoEstoque: Estoque = {...produto, quantidade: produto.quantidade - item.quantidade};
+            this.estoqueRepository.atualizarEstoque(novoEstoque);
+
+            const valor = item.quantidade * produto.precoVenda;
+            valorTotal += valor;
+            const itemVenda = new ItemVenda(item.estoqueId,modalidade.name, item.quantidade);
+            itens.push(itemVenda);
+        }
+
+        const novaVenda = new Venda (vendaId, cpfCliente, itens, valorTotal);
         this.vendaRepository.criaVenda(novaVenda);
+
         return novaVenda;
     }
 
-    buscaVenda(id: any): Venda|undefined{
-        if(id){
+    buscaVenda(vendaId: any): Venda|undefined{
+        if(vendaId){
             console.log("Com ID");
-            const idNumber: number = parseInt(id, 10);
+            const idNumber: number = parseInt(vendaId, 10);
             return this.vendaRepository.buscaVendaPorId(idNumber);
 
         }   
         return undefined;
     }
 }
-*/

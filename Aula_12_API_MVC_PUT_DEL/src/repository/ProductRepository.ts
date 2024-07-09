@@ -1,4 +1,4 @@
-import { Estoque, Modalidade } from "../model/Product";
+import { Estoque, Modalidade, Venda } from "../model/Product";
 
 export class ModalidadeRepository{
     modalidadeList: Modalidade[] = [];
@@ -30,6 +30,7 @@ export class ModalidadeRepository{
         }
         return index;
     }
+
 }
 
 ////////
@@ -68,16 +69,18 @@ export class EstoqueRepository {
 }
 
 ////
-/*
+
 export class VendaRepository {
-    itensComprados: Venda[] = [];
+    private vendaList : Venda[] = [];
     
     criaVenda(venda: Venda){
-        this.itensComprados.push(venda);
+        this.vendaList.push(venda);
+    }
+    listarVenda() : Venda[] {
+        return this.vendaList;
     }
     buscaVendaPorId(vendaId:any): Venda|undefined{
         const idNumber = parseInt(vendaId, 10);
-        return this.itensComprados.find(venda => venda.vendaId === idNumber);
+        return this.vendaList.find(venda => venda.vendaId === idNumber);
     }
 }
-*/

@@ -27,18 +27,28 @@ export class Estoque{
 }
 
 ///////
-/*
+export class ItemVenda {
+    estoqueId: any;
+    name: string;
+    quantidade: number;
+
+    constructor(estoqueId: any, name: string, quantidade: number) {
+        this.estoqueId = estoqueId;
+        this.name = name;
+        this.quantidade = quantidade;
+    }
+}
+
 export class Venda {
     vendaId: any;
     cpfCliente: any;
+    itens: ItemVenda[];
     valorTotal: number;
-    itensComprados: Estoque[];
 
-    constructor(vendaId: any, cpfCliente: any, valorTotal: number, itensComprados: Estoque[]){
+    constructor(vendaId: any, cpfCliente: any, itens: ItemVenda[], valorTotal: number){
         this.vendaId = vendaId;
         this.cpfCliente = cpfCliente;
+        this.itens = itens;
         this.valorTotal = valorTotal;
-        this.itensComprados = itensComprados;
     }
 }
-*/

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ModalidadeService, EstoqueService } from "../service/ProductService";
+import { ModalidadeService, EstoqueService, VendaService } from "../service/ProductService";
 
 const modalidadeService = new ModalidadeService();
 
@@ -132,12 +132,12 @@ export function atualizarEstoque (req: Request, res: Response){
 };
 
 /////
-/*
 const vendaService = new VendaService();
 
 export function adicionaVenda (req: Request, res: Response){
     try {
-        const novaVenda = vendaService.adicionaVenda(req.body);
+        const { vendaId, cpfCliente, itensVenda } = req.body;
+        const novaVenda = vendaService.adicionaVenda(vendaId, cpfCliente, itensVenda);
         res.status(200).json(
             {
                 mensagem:"Venda efetuada com sucesso!",
@@ -148,4 +148,17 @@ export function adicionaVenda (req: Request, res: Response){
         res.status(400).json({ message: error.message});
     }
 };
-*/
+
+export function buscaVenda(req: Request, res: Response) {
+    try {
+        const venda = vendaService.buscaVenda(req.query.vendaId);
+
+        if (venda) {
+            res.status(200).json(venda);
+        } else {
+            res.status(404).json({ message: "Venda não encontrada" });
+        }
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+}

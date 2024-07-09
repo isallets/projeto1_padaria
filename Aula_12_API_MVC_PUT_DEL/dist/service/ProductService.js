@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EstoqueService = exports.ModalidadeService = void 0;
+exports.VendaService = exports.EstoqueService = exports.ModalidadeService = void 0;
 const Product_1 = require("../model/Product");
 const ProductRepository_1 = require("../repository/ProductRepository");
 class ModalidadeService {
@@ -62,15 +62,20 @@ exports.ModalidadeService = ModalidadeService;
 class EstoqueService {
     constructor() {
         this.estoqueRepository = new ProductRepository_1.EstoqueRepository();
+        this.modalidadeRepository = new ProductRepository_1.ModalidadeRepository();
     }
     adicionaEstoque(EstoqueData) {
         const { id, estoqueId, quantidade, precoVenda } = EstoqueData;
         if (!id || !estoqueId || !quantidade || !precoVenda) {
             throw new Error("Informações incompletas");
         }
+        const modalidade = this.modalidadeRepository.filtraModalidadePorId(id);
+        if (!modalidade) {
+            throw new Error("Modalidade não encontrada para o estoqueId fornecido");
+        }
         const produtoEncontrado = this.buscarEstoque(estoqueId);
         if (produtoEncontrado) {
-            throw new Error("Modalidade já cadastrada!!!"); //retirar isso
+            throw new Error("Produto já cadastrado!!!"); //retirar isso
         }
         const novoEstoque = new Product_1.Estoque(id, estoqueId, quantidade, precoVenda);
         this.estoqueRepository.insereEstoque(novoEstoque);
@@ -125,32 +130,52 @@ class EstoqueService {
 }
 exports.EstoqueService = EstoqueService;
 ////////
-/*
-export class VendaService {
-    vendaRepository: VendaRepository = new VendaRepository();
-
-    adicionaVenda(vendaData: any): Venda {
-        let valorTotal:number;
-
-        const {vendaId, cpfCliente, valorTotal, itensComprados} = vendaData;
-        if(!vendaData){
+class VendaService {
+    constructor() {
+        this.vendaRepository = new ProductRepository_1.VendaRepository();
+        this.estoqueRepository = new ProductRepository_1.EstoqueRepository();
+        this.modalidadeRepository = new ProductRepository_1.ModalidadeRepository();
+    }
+    adicionaVenda(vendaId, cpfCliente, itensVenda) {
+        if (!vendaId || !cpfCliente || !itensVenda) {
             throw new Error("Informações incompletas");
         }
-        let estoque: Estoque = this.buscarEstoque(itensComprados.estoqueId);
-
-        const novaVenda = new Venda (vendaId, cpfCliente, valorTotal, itensComprados);
+        const itens = [];
+        let valorTotal = 0;
+        const vendaEncontrada = this.buscaVenda(vendaId);
+        if (vendaEncontrada) {
+            throw new Error("Venda já realizada!!!");
+        }
+        for (const item of itensVenda) {
+            const modalidade = this.modalidadeRepository.filtraModalidadePorId(item.estoqueId);
+            if (!modalidade) {
+                throw new Error(`Modalidade não encontrada`);
+            }
+            const produto = this.estoqueRepository.buscaEstoquePorId(item.estoqueId);
+            if (!produto) {
+                throw new Error("Produto não encontrado");
+            }
+            if (produto.quantidade < item.quantidade) {
+                throw new Error("Estoque insuficiente");
+            }
+            const novoEstoque = Object.assign(Object.assign({}, produto), { quantidade: produto.quantidade - item.quantidade });
+            this.estoqueRepository.atualizarEstoque(novoEstoque);
+            const valor = item.quantidade * produto.precoVenda;
+            valorTotal += valor;
+            const itemVenda = new Product_1.ItemVenda(item.estoqueId, modalidade.name, item.quantidade);
+            itens.push(itemVenda);
+        }
+        const novaVenda = new Product_1.Venda(vendaId, cpfCliente, itens, valorTotal);
         this.vendaRepository.criaVenda(novaVenda);
         return novaVenda;
     }
-
-    buscaVenda(id: any): Venda|undefined{
-        if(id){
+    buscaVenda(vendaId) {
+        if (vendaId) {
             console.log("Com ID");
-            const idNumber: number = parseInt(id, 10);
+            const idNumber = parseInt(vendaId, 10);
             return this.vendaRepository.buscaVendaPorId(idNumber);
-
         }
         return undefined;
     }
 }
-*/ 
+exports.VendaService = VendaService;
