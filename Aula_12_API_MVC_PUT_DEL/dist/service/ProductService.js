@@ -39,7 +39,7 @@ class ModalidadeService {
         if (!modalidade) {
             throw new Error("Modalidade não encontrada!!");
         }
-        this.modalidadeRepository.deletarModalidade(modalidade); //SUBSTITUIR ACAO DENTRO DO IF
+        this.modalidadeRepository.deletarModalidade(modalidade);
     }
     atualizarModalidade(modalidadeData) {
         const { id, name, vegano } = modalidadeData;
@@ -63,18 +63,23 @@ class EstoqueService {
     constructor() {
         this.estoqueRepository = new ProductRepository_1.EstoqueRepository();
         this.modalidadeRepository = new ProductRepository_1.ModalidadeRepository();
+        this.modalidadeService = new ModalidadeService();
     }
     adicionaEstoque(EstoqueData) {
         const { id, estoqueId, quantidade, precoVenda } = EstoqueData;
         if (!id || !estoqueId || !quantidade || !precoVenda) {
             throw new Error("Informações incompletas");
         }
-        const produtoEncontrado = this.buscarEstoque(estoqueId);
+        const modalidadeEncontrado = this.modalidadeService.consultarModalidade(id);
+        if (!modalidadeEncontrado) {
+            throw new Error("Modalidade não cadastrada!!!");
+        }
+        const produtoEncontrado = this.estoqueRepository.buscaEstoquePorId(estoqueId);
         if (produtoEncontrado) {
             throw new Error("Produto já cadastrado!!!");
         }
         const novoEstoque = new Product_1.Estoque(id, estoqueId, quantidade, precoVenda);
-        this.estoqueRepository.insereEstoque(novoEstoque);
+        this.estoqueRepository.insereEstoque(novoEstoque, id);
         return novoEstoque;
     }
     buscarEstoque(estoqueId) {

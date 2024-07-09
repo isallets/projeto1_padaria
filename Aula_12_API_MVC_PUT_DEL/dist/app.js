@@ -9,7 +9,7 @@ const ProductController_1 = require("./controller/ProductController");
 const ProductController_2 = require("./controller/ProductController");
 const ProductController_3 = require("./controller/ProductController");
 const app = (0, express_1.default)();
-const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 4000;
+const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 4800;
 app.use(express_1.default.json());
 function logInfo() {
     console.log(`API em execução no URL: http:localhost:${PORT}`);

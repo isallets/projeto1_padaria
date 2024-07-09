@@ -35,8 +35,9 @@ class EstoqueRepository {
     constructor() {
         this.estoqueList = [];
     }
-    insereEstoque(estoque) {
-        this.estoqueList.push(estoque);
+    insereEstoque(estoque, id) {
+        const estoqueEModalidade = Object.assign(Object.assign({}, estoque), { id });
+        this.estoqueList.push(estoqueEModalidade, id);
     }
     buscaEstoquePorId(estoqueId) {
         const idNumber = parseInt(estoqueId, 10);
@@ -45,14 +46,6 @@ class EstoqueRepository {
     filtraTodoEstoque() {
         return this.estoqueList;
     }
-    /*
-        deletarModalidade(estoque:Estoque){
-            const index = this.estoqueList.indexOf(estoque);
-            if (index !== -1) {
-                this.estoqueList.splice(index, 1);
-            }
-        }
-        */
     atualizarEstoque(estoque) {
         const index = this.estoqueList.indexOf(estoque);
         if (index !== -1) {

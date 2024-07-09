@@ -42,7 +42,7 @@ export class ModalidadeService{
             throw new Error("Modalidade não encontrada!!");
         }
 
-        this.modalidadeRepository.deletarModalidade(modalidade); //SUBSTITUIR ACAO DENTRO DO IF
+        this.modalidadeRepository.deletarModalidade(modalidade); 
     }
     
     atualizarModalidade(modalidadeData: any): Modalidade {
@@ -69,18 +69,23 @@ export class EstoqueService{
 
     estoqueRepository: EstoqueRepository = new EstoqueRepository();
     modalidadeRepository: ModalidadeRepository = new ModalidadeRepository();
+    modalidadeService: ModalidadeService = new ModalidadeService();
 
     adicionaEstoque(EstoqueData: any): Estoque {
         const {id, estoqueId, quantidade, precoVenda} = EstoqueData;
         if(!id || !estoqueId || !quantidade || !precoVenda){
             throw new Error("Informações incompletas");
         }
-        const produtoEncontrado = this.buscarEstoque(estoqueId);
-        if(produtoEncontrado){
+        const modalidadeEncontrado = this.modalidadeService.consultarModalidade(id);
+        if(!modalidadeEncontrado){
+            throw new Error("Modalidade não cadastrada!!!");
+        }
+        const produtoEncontrado = this.estoqueRepository.buscaEstoquePorId(estoqueId);
+        if (produtoEncontrado) {
             throw new Error("Produto já cadastrado!!!");
         }
-        const novoEstoque = new Estoque(id,estoqueId, quantidade, precoVenda);
-        this.estoqueRepository.insereEstoque(novoEstoque);
+        const novoEstoque = new Estoque(id, estoqueId, quantidade, precoVenda);
+        this.estoqueRepository.insereEstoque(novoEstoque, id);
         return novoEstoque;
     }
 

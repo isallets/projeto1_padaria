@@ -38,8 +38,9 @@ export class ModalidadeRepository{
 export class EstoqueRepository {
     estoqueList: Estoque[] = [];
 
-    insereEstoque(estoque: Estoque){
-        this.estoqueList.push(estoque);
+    insereEstoque(estoque: Estoque,id:any){
+        const estoqueEModalidade = {...estoque, id}
+        this.estoqueList.push(estoqueEModalidade, id);
     }
 
     buscaEstoquePorId(estoqueId:any): Estoque|undefined{
