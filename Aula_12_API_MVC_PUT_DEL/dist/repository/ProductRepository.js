@@ -1,15 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VendaRepository = exports.EstoqueRepository = exports.ModalidadeRepository = void 0;
+const database_1 = require("../global/database");
 class ModalidadeRepository {
     constructor() {
-        this.modalidadeList = [];
+        this.modalidadeList = (0, database_1.getModalidadeList)();
     }
     insereModalidade(modalidade) {
         this.modalidadeList.push(modalidade);
     }
     filtraModalidadePorId(id) {
         const idNumber = parseInt(id, 10);
+        console.log("123", idNumber, this.modalidadeList);
         return this.modalidadeList.find(modalidade => modalidade.id === idNumber);
     }
     filtraTodasModalidades() {

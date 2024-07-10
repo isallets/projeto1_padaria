@@ -1,7 +1,9 @@
+import { getModalidadeList } from "../global/database";
 import { Estoque, Modalidade, Venda } from "../model/Product";
 
+
 export class ModalidadeRepository{
-    modalidadeList: Modalidade[] = [];
+    modalidadeList: Modalidade[] = getModalidadeList();
 
     insereModalidade(modalidade: Modalidade){
         this.modalidadeList.push(modalidade);
@@ -9,6 +11,7 @@ export class ModalidadeRepository{
 
     filtraModalidadePorId(id:any): Modalidade|undefined{
         const idNumber = parseInt(id, 10);
+        console.log("123", idNumber, this.modalidadeList)
         return this.modalidadeList.find(modalidade => modalidade.id === idNumber);
     }
 
